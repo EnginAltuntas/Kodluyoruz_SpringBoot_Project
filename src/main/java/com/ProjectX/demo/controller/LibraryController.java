@@ -24,6 +24,7 @@ public class LibraryController {
         return "Hello World!";
     }
 
+    @ApiOperation(value = "List all books")
     @GetMapping(path = "/books")
     public ResponseEntity<List<booksDO>> getAllBooks()
     {
@@ -31,7 +32,7 @@ public class LibraryController {
         return new ResponseEntity<>(allBooks, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Yeni Kitap Ekle")
+    @ApiOperation(value = "Add new book")
     @PostMapping(path = "/addbook",consumes = "application/json",produces="application/json")
     public ResponseEntity<booksDO> addBook(@RequestBody booksDO booksDO)
     {
@@ -39,13 +40,14 @@ public class LibraryController {
         return new ResponseEntity<>(newbook, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Delete book by id")
     @DeleteMapping(path = "/book/{book_id}")
     public ResponseEntity<String> deleteBook(@PathVariable(value = "book_id")Long id)
     {
         libraryService.deleteBook(id);
         return new ResponseEntity<>("Book id: "+id+" is deleted",HttpStatus.OK);
     }
-
+    @ApiOperation(value = "Update book information")
     @PutMapping(path = "/putbook",consumes = "application/json",produces = "application/json")
     public ResponseEntity<booksDTO> updateBook(@RequestBody booksDO book)
     {
